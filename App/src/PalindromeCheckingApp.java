@@ -1,47 +1,124 @@
-import java.util.*;
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
-public class PalindromeCheckingApp {
-    /**
-     * Checks if a given string is a palindrome using a Deque.
-     * Non-alphanumeric characters and case are ignored.
-     *
-     * @param str The string to check.
-     * @return true if the string is a palindrome, false otherwise.
-     */
-    public static boolean isPalindrome(String str) {
-        Deque<Character> charDeque = new ArrayDeque<>();
+// Node class represents a node in a linked list
+class Node {
+    int data;       // Data stored in the node
+    Node next;      // Pointer to the next node in the list
 
-        // Preprocess the string: convert to lowercase and add only letters/digits to the deque
-        String cleanStr = str.toLowerCase();
-        for (char c : cleanStr.toCharArray()) {
-            if (Character.isLetterOrDigit(c)) {
-                charDeque.addLast(c);
-            }
-        }
-
-        // Compare characters from both ends
-        while (charDeque.size() > 1) {
-            Character first = charDeque.removeFirst(); // Remove from the front (head)
-            Character last = charDeque.removeLast();   // Remove from the back (tail)
-
-            if (!first.equals(last)) {
-                return false; // Not a palindrome if any pair does not match
-            }
-        }
-
-        return true; // The string is a palindrome
+    // Constructor with both data and next node as parameters
+    Node(int data1, Node next1) {
+        data = data1;
+        next = next1;
     }
 
-    public static void main(String[] args) {
-        String s1 = "madam";
-        String s2 = "A man, a plan, a canal, Panama";
-        String s3 = "hello";
+    // Constructor with only data as a parameter, sets next to null
+    Node(int data1) {
+        data = data1;
+        next = null;
+    }
+}
 
-        System.out.println("Is \"" + s1 + "\" a palindrome? " + isPalindrome(s1));
-        System.out.println("Is \"" + s2 + "\" a palindrome? " + isPalindrome(s2));
-        System.out.println("Is \"" + s3 + "\" a palindrome? " + isPalindrome(s3));
+// Solution class to check if the linked list is a palindrome
+class Solution {
+    // Function to reverse a linked list using the recursive approach
+    public Node reverseLinkedList(Node head) {
+        // Check if the list is empty or has only one node
+        if (head == null || head.next == null) {
+            return head;  // No change is needed; return the current head
+        }
+
+        // Recursive step: Reverse the remaining part of the list and get the new head
+        Node newHead = reverseLinkedList(head.next);
+
+        // Store the next node in 'front' to reverse the link
+        Node front = head.next;
+
+        // Update the 'next' pointer of 'front' to point to the current head
+        front.next = head;
+
+        // Set the 'next' pointer of the current head to null to break the original link
+        head.next = null;
+
+        // Return the new head obtained from the recursion
+        return newHead;
+    }
+
+    // Function to check if the linked list is a palindrome
+    public boolean isPalindrome(Node head) {
+        // Check if the linked list is empty or has only one node
+        if (head == null || head.next == null) {
+            return true;  // It's a palindrome by definition
+        }
+
+        // Initialize two pointers, slow and fast, to find the middle of the linked list
+        Node slow = head;
+        Node fast = head;
+
+        // Traverse the linked list to find the middle using slow and fast pointers
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;       // Move slow pointer one step at a time
+            fast = fast.next.next;  // Move fast pointer two steps at a time
+        }
+
+        // Reverse the second half of the linked list starting from the middle
+        Node newHead = reverseLinkedList(slow.next);
+
+        // Pointer to the first half
+        Node first = head;
+
+        // Pointer to the reversed second half
+        Node second = newHead;
+
+        // Compare data values of nodes from both halves
+        while (second != null) {
+            if (first.data != second.data) {
+                // If values do not match, the list is not a palindrome
+                reverseLinkedList(newHead);  // Reverse the second half back to its original state
+                return false;
+            }
+
+            first = first.next;  // Move the first pointer
+            second = second.next; // Move the second pointer
+        }
+
+        // Reverse the second half back to its original state
+        reverseLinkedList(newHead);
+
+        // The linked list is a palindrome
+        return true;
+    }
+}
+
+public class PalindromeCheckingApp {
+    public static void main(String[] args) {
+        // Create a linked list with values 1, 5, 2, 5, and 1 (15251, a palindrome)
+        Node head = new Node(1);
+        head.next = new Node(5);
+        head.next.next = new Node(2);
+        head.next.next.next = new Node(5);
+        head.next.next.next.next = new Node(1);
+
+        // Print the original linked list
+        System.out.print("Original Linked List: ");
+        printLinkedList(head);
+
+        // Create an instance of Solution class
+        Solution solution = new Solution();
+
+        // Check if the linked list is a palindrome
+        if (solution.isPalindrome(head)) {
+            System.out.println("The linked list is a palindrome.");
+        } else {
+            System.out.println("The linked list is not a palindrome.");
+        }
+    }
+
+    // Function to print the linked list
+    public static void printLinkedList(Node head) {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");  // Print the current node's data
+            temp = temp.next;                   // Move to the next node
+        }
+        System.out.println();
     }
 }
 
