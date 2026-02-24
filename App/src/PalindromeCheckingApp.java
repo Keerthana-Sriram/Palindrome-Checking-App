@@ -1,19 +1,33 @@
+import java.util.*;
 public class PalindromeCheckingApp {
 
-    public static void main(String [] args){
-        String str = "Radar", reverseStr = "";
+    public static int isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
 
-        int strLength = str.length();
+        // Continue looping while the two pointers
+        // have not crossed
+        while (left < right) {
 
-        for (int i = (strLength - 1); i >=0; --i) {
-            reverseStr = reverseStr + str.charAt(i);
+            // If the characters at the current positions
+            // are not equal
+            if (s.charAt(left) != s.charAt(right))
+                return 0;
+
+            // Move the left pointer to the right and
+            // the right pointer to the left
+            left++;
+            right--;
         }
 
-        if (str.toLowerCase().equals(reverseStr.toLowerCase())) {
-            System.out.println(str + " is a Palindrome String.");
-        }
-        else {
-            System.out.println(str + " is not a Palindrome String.");
-        }
+        // If no mismatch is found, return 1 (palindrome)
+        return 1;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter string: ");
+        String s = sc.NextLine();
+        System.out.println(isPalindrome(s));
     }
 }
