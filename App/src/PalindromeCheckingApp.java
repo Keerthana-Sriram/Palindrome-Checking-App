@@ -1,25 +1,19 @@
 public class PalindromeCheckingApp {
-    public static boolean isPalindrome(String s){
 
-        // Convert to lowercase for case-insensitive check
-        s = s.toLowerCase();
+    public static void main(String [] args){
+        String str = "Radar", reverseStr = "";
 
-        // Reverse the string
-        String rev = "";
-        for (int i = s.length() - 1; i >= 0; i--) {
-            rev = rev + s.charAt(i);
+        int strLength = str.length();
+
+        for (int i = (strLength - 1); i >=0; --i) {
+            reverseStr = reverseStr + str.charAt(i);
         }
 
-        // Compare original and reversed
-        return s.equals(rev);
-    }
-    public static void main(String [] args){
-        String s = "level";
-
-        if (isPalindrome(s)) {
-            System.out.println("\"" + s + "\" is a palindrome.");
-        } else {
-            System.out.println("\"" + s + "\" is not a palindrome.");
+        if (str.toLowerCase().equals(reverseStr.toLowerCase())) {
+            System.out.println(str + " is a Palindrome String.");
+        }
+        else {
+            System.out.println(str + " is not a Palindrome String.");
         }
     }
 }
