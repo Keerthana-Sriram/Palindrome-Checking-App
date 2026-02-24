@@ -1,9 +1,6 @@
 # Palindrome-Checking-App
-// this is the sixth use case
-// this is also user input program
-// it checks using recursion and returns true or false
-// Algorithm:
-// Create stack to store characters
-// Push each character of input to stack
-// Compare by popping
-// return
+// this is the 13th use case
+// checks three different types of algorithms
+// brute force
+// pointer
+// recursive
