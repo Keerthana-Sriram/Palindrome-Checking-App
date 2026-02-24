@@ -1,33 +1,33 @@
 import java.util.*;
+import java.util.Stack;
 public class PalindromeCheckingApp {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter any string: ");
+        String inputString = in.nextLine();
 
-    public static int isPalindrome(String s) {
-        int left = 0;
-        int right = s.length() - 1;
+        // Optional: Normalize the string (ignore case and non-alphanumeric characters)
+        String normalizedString = inputString.replaceAll("\\s+", "").toLowerCase();
 
-        // Continue looping while the two pointers
-        // have not crossed
-        while (left < right) {
+        Stack<Character> stack = new Stack<>();
 
-            // If the characters at the current positions
-            // are not equal
-            if (s.charAt(left) != s.charAt(right))
-                return 0;
-
-            // Move the left pointer to the right and
-            // the right pointer to the left
-            left++;
-            right--;
+        // Push all characters of the normalized string onto the stack
+        for (int i = 0; i < normalizedString.length(); i++) {
+            stack.push(normalizedString.charAt(i));
         }
 
-        // If no mismatch is found, return 1 (palindrome)
-        return 1;
+        String reverseString = "";
+        // Pop each character from the stack to build the reversed string
+        while (!stack.isEmpty()) {
+            reverseString += stack.pop();
+        }
+
+        // Compare the original normalized string with the reversed string
+        if (normalizedString.equals(reverseString)) {
+            System.out.println("The input String is a palindrome.");
+        } else {
+            System.out.println("The input String is not a palindrome.");
+        }
+    }
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter string: ");
-        String s = sc.NextLine();
-        System.out.println(isPalindrome(s));
-    }
-}
