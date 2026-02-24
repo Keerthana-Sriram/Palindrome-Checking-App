@@ -1,5 +1,5 @@
 # Palindrome-Checking-App
-// this is the fifth use case
-// this is a user input program
-// it checks using stack datastructure approach and returns true or false
+// this is the sixth use case
+// this is also user input program
+// it checks using stack and queue datastructure approach and returns true or false
 // accordingly, the output is printed.
