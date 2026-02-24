@@ -3,39 +3,45 @@ import java.util.Stack;
 import java.util.Queue;
 import java.util.LinkedList;
 public class PalindromeCheckingApp {
-    public static boolean isPalindrome(String input) {
-        // Normalize the input: convert to lowercase and remove non-alphanumeric characters
-        String cleanedInput = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+    /**
+     * Checks if a given string is a palindrome using a Deque.
+     * Non-alphanumeric characters and case are ignored.
+     *
+     * @param str The string to check.
+     * @return true if the string is a palindrome, false otherwise.
+     */
+    public static boolean isPalindrome(String str) {
+        Deque<Character> charDeque = new ArrayDeque<>();
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
-
-        // Add each character to both the queue and the stack
-        for (char c : cleanedInput.toCharArray()) {
-            queue.add(c);
-            stack.push(c);
-        }
-
-        // Compare characters from the front of the queue and the top of the stack
-        while (!queue.isEmpty()) {
-            if (!queue.remove().equals(stack.pop())) {
-                // If any characters do not match, it's not a palindrome
-                return false;
+        // Preprocess the string: convert to lowercase and add only letters/digits to the deque
+        String cleanStr = str.toLowerCase();
+        for (char c : cleanStr.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                charDeque.addLast(c);
             }
         }
 
-        // If the loop completes without any mismatch, it is a palindrome
-        return true;
+        // Compare characters from both ends
+        while (charDeque.size() > 1) {
+            Character first = charDeque.removeFirst(); // Remove from the front (head)
+            Character last = charDeque.removeLast();   // Remove from the back (tail)
+
+            if (!first.equals(last)) {
+                return false; // Not a palindrome if any pair does not match
+            }
+        }
+
+        return true; // The string is a palindrome
     }
 
     public static void main(String[] args) {
-        String testString1 = "madam";
-        String testString2 = "A man, a plan, a canal, Panama."; // Palindrome phrase
-        String testString3 = "hello";
+        String s1 = "madam";
+        String s2 = "A man, a plan, a canal, Panama";
+        String s3 = "hello";
 
-        System.out.println("Is \"" + testString1 + "\" a palindrome? " + isPalindrome(testString1));
-        System.out.println("Is \"" + testString2 + "\" a palindrome? " + isPalindrome(testString2));
-        System.out.println("Is \"" + testString3 + "\" a palindrome? " + isPalindrome(testString3));
+        System.out.println("Is \"" + s1 + "\" a palindrome? " + isPalindrome(s1));
+        System.out.println("Is \"" + s2 + "\" a palindrome? " + isPalindrome(s2));
+        System.out.println("Is \"" + s3 + "\" a palindrome? " + isPalindrome(s3));
     }
 }
 
