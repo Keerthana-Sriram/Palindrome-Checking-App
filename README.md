@@ -3,8 +3,8 @@
 // this is also user input program
 // it checks using recursion and returns true or false
 // Algorithm:
-// Remove all non-alphanumeric characters (including spaces and punctuation)
-// and convert to lowercase
-// Reverse the cleaned string using StringBuilder
-// Compare the cleaned string with its reversed version
-//return output
+// Use constructors
+// Setter to allow changing the text
+// Public method that provides access to the functionality
+// Encapsulated logic: Using StringBuilder for reversal
+// Return result of comparison

@@ -1,29 +1,27 @@
 
 public class PalindromeCheckingApp {
-    public static boolean isPalindromeIgnoreCaseAndSpaces(String originalString) {
-        // Remove all non-alphanumeric characters (including spaces and punctuation)
-        // and convert to lowercase
-        String cleanString = originalString.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+    // Data Hiding: Private variable
+    private String text;
 
-        // Reverse the cleaned string using StringBuilder
-        String reverseString = new StringBuilder(cleanString).reverse().toString();
-
-        // Compare the cleaned string with its reversed version
-        return cleanString.equals(reverseString);
+    // Constructor
+    public PalindromeManager(String text) {
+        this.text = text;
     }
 
-    public static void main(String[] args) {
-        String testPhrase = "A man, a plan, a canal, Panama";
-        System.out.println("The phrase: \"" + testPhrase + "\" is a palindrome? " +
-                isPalindromeIgnoreCaseAndSpaces(testPhrase));
+    // Setter to allow changing the text
+    public void setText(String text) {
+        this.text = text;
+    }
 
-        String testPhrase2 = "Race car";
-        System.out.println("The phrase: \"" + testPhrase2 + "\" is a palindrome? " +
-                isPalindromeIgnoreCaseAndSpaces(testPhrase2));
+    // Public method that provides access to the functionality
+    public boolean isPalindrome() {
+        if (text == null) return false;
 
-        String testPhrase3 = "hello world";
-        System.out.println("The phrase: \"" + testPhrase3 + "\" is a palindrome? " +
-                isPalindromeIgnoreCaseAndSpaces(testPhrase3));
+        // Encapsulated logic: Using StringBuilder for reversal
+        String reversed = new StringBuilder(text).reverse().toString();
+
+        // Return result of comparison
+        return text.equals(reversed);
     }
 }
 
