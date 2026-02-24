@@ -1,4 +1,5 @@
 # Palindrome-Checking-App
-// this is the first use case
-// this is the start page
-// a welcome message will be displayed
+// this is the second use case
+// this is a hardcoded program
+// it checks using fuctions and returns true or false
+// accordingly, the statement is printed.
