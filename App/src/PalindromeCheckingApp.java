@@ -1,27 +1,32 @@
 
 public class PalindromeCheckingApp {
-    // Data Hiding: Private variable
-    private String text;
+    public class GFG{
 
-    // Constructor
-    public PalindromeManager(String text) {
-        this.text = text;
-    }
+        public static boolean isPalindrome(String s){
 
-    // Setter to allow changing the text
-    public void setText(String text) {
-        this.text = text;
-    }
+            // Convert to lowercase for case-insensitive check
+            s = s.toLowerCase();
 
-    // Public method that provides access to the functionality
-    public boolean isPalindrome() {
-        if (text == null) return false;
+            // Reverse the string
+            String rev = "";
+            for (int i = s.length() - 1; i >= 0; i--) {
+                rev = rev + s.charAt(i);
+            }
 
-        // Encapsulated logic: Using StringBuilder for reversal
-        String reversed = new StringBuilder(text).reverse().toString();
+            // Compare original and reversed
+            return s.equals(rev);
+        }
 
-        // Return result of comparison
-        return text.equals(reversed);
+        public static void main(String[] args) {
+
+            String s = "level";
+
+            if (isPalindrome(s)) {
+                System.out.println("\"" + s + "\" is a palindrome.");
+            } else {
+                System.out.println("\"" + s + "\" is not a palindrome.");
+            }
+        }
     }
 }
 
