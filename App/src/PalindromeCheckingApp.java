@@ -1,124 +1,54 @@
-// Node class represents a node in a linked list
-class Node {
-    int data;       // Data stored in the node
-    Node next;      // Pointer to the next node in the list
-
-    // Constructor with both data and next node as parameters
-    Node(int data1, Node next1) {
-        data = data1;
-        next = next1;
-    }
-
-    // Constructor with only data as a parameter, sets next to null
-    Node(int data1) {
-        data = data1;
-        next = null;
-    }
-}
-
-// Solution class to check if the linked list is a palindrome
-class Solution {
-    // Function to reverse a linked list using the recursive approach
-    public Node reverseLinkedList(Node head) {
-        // Check if the list is empty or has only one node
-        if (head == null || head.next == null) {
-            return head;  // No change is needed; return the current head
-        }
-
-        // Recursive step: Reverse the remaining part of the list and get the new head
-        Node newHead = reverseLinkedList(head.next);
-
-        // Store the next node in 'front' to reverse the link
-        Node front = head.next;
-
-        // Update the 'next' pointer of 'front' to point to the current head
-        front.next = head;
-
-        // Set the 'next' pointer of the current head to null to break the original link
-        head.next = null;
-
-        // Return the new head obtained from the recursion
-        return newHead;
-    }
-
-    // Function to check if the linked list is a palindrome
-    public boolean isPalindrome(Node head) {
-        // Check if the linked list is empty or has only one node
-        if (head == null || head.next == null) {
-            return true;  // It's a palindrome by definition
-        }
-
-        // Initialize two pointers, slow and fast, to find the middle of the linked list
-        Node slow = head;
-        Node fast = head;
-
-        // Traverse the linked list to find the middle using slow and fast pointers
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;       // Move slow pointer one step at a time
-            fast = fast.next.next;  // Move fast pointer two steps at a time
-        }
-
-        // Reverse the second half of the linked list starting from the middle
-        Node newHead = reverseLinkedList(slow.next);
-
-        // Pointer to the first half
-        Node first = head;
-
-        // Pointer to the reversed second half
-        Node second = newHead;
-
-        // Compare data values of nodes from both halves
-        while (second != null) {
-            if (first.data != second.data) {
-                // If values do not match, the list is not a palindrome
-                reverseLinkedList(newHead);  // Reverse the second half back to its original state
-                return false;
-            }
-
-            first = first.next;  // Move the first pointer
-            second = second.next; // Move the second pointer
-        }
-
-        // Reverse the second half back to its original state
-        reverseLinkedList(newHead);
-
-        // The linked list is a palindrome
-        return true;
-    }
-}
 
 public class PalindromeCheckingApp {
-    public static void main(String[] args) {
-        // Create a linked list with values 1, 5, 2, 5, and 1 (15251, a palindrome)
-        Node head = new Node(1);
-        head.next = new Node(5);
-        head.next.next = new Node(2);
-        head.next.next.next = new Node(5);
-        head.next.next.next.next = new Node(1);
+    /**
+     * Public method to check if a string is a palindrome.
+     * It uses a private helper method for the actual recursion.
+     * @param str The string to check.
+     * @return true if the string is a palindrome, false otherwise.
+     */
+    public static boolean isPalindrome(String str) {
+        // Optional: Preprocess the string to handle case-insensitivity and non-alphanumeric characters.
+        // For a simple, strict string comparison, skip this.
+        // String cleanStr = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        // return isPalindromeRecursive(cleanStr, 0, cleanStr.length() - 1);
 
-        // Print the original linked list
-        System.out.print("Original Linked List: ");
-        printLinkedList(head);
-
-        // Create an instance of Solution class
-        Solution solution = new Solution();
-
-        // Check if the linked list is a palindrome
-        if (solution.isPalindrome(head)) {
-            System.out.println("The linked list is a palindrome.");
-        } else {
-            System.out.println("The linked list is not a palindrome.");
-        }
+        return isPalindromeRecursive(str, 0, str.length() - 1);
     }
 
-    // Function to print the linked list
-    public static void printLinkedList(Node head) {
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data + " ");  // Print the current node's data
-            temp = temp.next;                   // Move to the next node
+    /**
+     * Private recursive helper method to check the palindrome property.
+     * @param str The string being checked.
+     * @param left The index of the left pointer (start).
+     * @param right The index of the right pointer (end).
+     * @return true if the substring is a palindrome, false otherwise.
+     */
+    private static boolean isPalindromeRecursive(String str, int left, int right) {
+        // Base case 1: If the left pointer crosses or meets the right pointer,
+        // it means all characters have been compared and matched, so it is a palindrome.
+        if (left >= right) {
+            return true;
         }
-        System.out.println();
+
+        // Base case 2: If the characters at the current left and right positions
+        // do not match, it is not a palindrome.
+        if (str.charAt(left) != str.charAt(right)) {
+            return false;
+        }
+
+        // Recursive case: If the current characters match,
+        // recursively call the function for the inner substring
+        // by moving the pointers inward.
+        return isPalindromeRecursive(str, left + 1, right - 1);
+    }
+
+    public static void main(String[] args) {
+        String s1 = "madam";
+        String s2 = "racecar";
+        String s3 = "hello";
+
+        System.out.println(s1 + " is a palindrome? " + isPalindrome(s1));
+        System.out.println(s2 + " is a palindrome? " + isPalindrome(s2));
+        System.out.println(s3 + " is a palindrome? " + isPalindrome(s3));
     }
 }
 
